@@ -1,0 +1,100 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+class Program
+{
+    static void Main()
+    {
+        var line = Console.ReadLine();
+        int jobs = int.Parse(line);
+        int work_start = 0;
+        int work_end   = 0;
+        int[,] jobTime = new int[jobs, 2];
+        bool flg = true;
+        for (int i = 0; i < jobs; i++)
+        {
+            line = Console.ReadLine();
+            string[] str = line.Split(' ');
+            jobTime[i, 0] = int.Parse(str[0]);
+            jobTime[i, 1] = int.Parse(str[1]);
+            if (flg)
+            {
+                work_start = jobTime[i, 0];
+                work_end   = jobTime[i, 1];
+                flg = false;
+            }
+            if (work_start > jobTime[i, 0])
+            {
+                work_start = jobTime[i, 0];
+            }
+            if (work_end < jobTime[i, 1])
+            {
+                work_end = jobTime[i, 1];
+            }
+        }
+        
+        List<int> holidayList = new List<int>();
+        int count = 0;
+        for (int i = work_start; i < work_end; i++)
+        {
+            count = 0;
+            for (int j = 0; j < jobTime.Length / 2; j++)
+            {
+                if (jobTime[j, 0] <= i && i <= jobTime[j, 1])
+                {
+                    break;
+                }
+                else
+                {
+                    count++;
+                }
+            }
+            if (count == jobTime.Length / 2 && count != 0)
+            {
+                holidayList.Add(i);
+            }
+        }
+        
+        int workCount = 0;
+        int work_start_dummy = work_start;
+        List<int> workCountList = new List<int>();
+        for (int i = 0; i < holidayList.Count; i++)
+        {
+            for (int j = work_start_dummy; j < work_end; j++)
+            {
+                if (j == holidayList[i])
+                {
+                    workCountList.Add(workCount);
+                    workCount = 0;
+                    work_start_dummy = j + 1;
+                    if (i == holidayList.Count - 1)
+                    {
+                        workCount++;
+                        continue;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    workCount++;
+                }
+            }
+            if (i == holidayList.Count - 1)
+            {
+                workCountList.Add(workCount);
+            }
+        }
+        
+        if (workCountList.Count == 0)
+        {
+            Console.WriteLine((work_end - work_start) + 1);
+        }
+        else
+        {
+            Console.WriteLine(workCountList.Max());
+        }
+    }
+}
