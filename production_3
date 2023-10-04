@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        var line = Console.ReadLine();
+        int num = int.Parse(line);
+        List<int> nums = new List<int>();
+        while (0 < num)
+        {
+            nums.Add(num % 10);
+            num = (num / 10);        
+        }
+        nums.Reverse();
+        
+        List<string> strs = new List<string>();
+        for (int l = 0; l < nums.Count; l++)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                string str = "";
+                for (int j= 0; j < 3; j++)
+                {
+                    if (nums[l] > 0)
+                    {
+                        str += "#";
+                        nums[l]--;
+                    }
+                    else
+                    {
+                        str += ".";
+                    }
+                }
+                strs.Add(str);
+            }
+        }
+        
+        int Number = 0;
+        int count = 0;
+        for (int i = 0; i < nums.Count; i++)
+        {
+            string ans = "";
+            for (int j = 0; j < 3; j++)
+            {
+                ans += strs[(i + Number) + (j * 3)];
+                count++;
+                if (i != 0 && count % 9 == 0)
+                {
+                    Number = Number + (j * 3);
+                }
+            }
+            Console.WriteLine(ans);
+        }
+    }
+}
