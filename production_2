@@ -1,0 +1,61 @@
+using System;
+class Program
+{
+    static void Main()
+    {
+        var line = Console.ReadLine();
+        string[] arr = line.Split(' ');
+        int n = int.Parse(arr[0]);
+        int m = int.Parse(arr[1]);
+        line = Console.ReadLine();
+        arr = line.Split(' ');
+        int h = int.Parse(arr[0]);
+        int w = int.Parse(arr[1]);
+        int[] cropsCount = new int[m];
+        string[,] field =  new string[h, w];
+        
+        for (int i = 0; i < n; i++)
+        {
+            line = Console.ReadLine();
+            arr = line.Split(' ');
+            int h_start = int.Parse(arr[0]);
+            int h_end = int.Parse(arr[1]);
+            int w_start = int.Parse(arr[2]);
+            int w_end = int.Parse(arr[3]);
+            string crops = arr[4];
+            
+            for (int x = h_start - 1; x < h_end; x++)
+            {
+                for (int y = w_start - 1; y < w_end; y++)
+                {
+                    if (field[x, y] != null)
+                    {
+                        cropsCount[int.Parse(field[x, y]) - 1]++;
+                        field[x, y] = null;
+                    }
+                    field[x, y] = crops; 
+                }
+            }
+        }
+        
+        for (int i = 0; i < cropsCount.Length; i++)
+        {
+            Console.WriteLine(cropsCount[i]);
+        }
+        for (int x = 0; x < h; x++)
+        {
+            for (int y = 0; y < w; y++)
+            {
+                if (field[x, y] == null)
+                {
+                    Console.Write(".");
+                }
+                else
+                {
+                    Console.Write(field[x, y]);
+                }
+            }
+            Console.WriteLine("");
+        }
+    }
+}
