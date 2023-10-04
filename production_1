@@ -1,0 +1,56 @@
+using System;
+class Program
+{
+    static void Main()
+    {
+        string ans = "";
+        var line = Console.ReadLine(); 
+        string[] str = line.Split(' ');
+        int N = int.Parse(str[0]);　　  //N＝予約されてる席の数
+        int H = int.Parse(str[1]);    　//H＝映画館の座席の縦列
+        int W = int.Parse(str[2]);    　//W＝映画館の座席の横列
+        int P = int.Parse(str[3]);    　//P＝最もみやすい席の縦座標
+        int Q = int.Parse(str[4]);    　//Q＝最もみやすい席の横座標
+        bool[,] box = new bool[H, W];
+        int[,] distance = new int[H, W];
+        for (int i = 0; i < N; i++)
+        {
+            line = Console.ReadLine();
+            str = line.Split(' ');
+            int x = int.Parse(str[0]);
+            int y = int.Parse(str[1]);
+            box[x, y] = true;
+        }
+        int min = 0;
+        bool flg = true;
+        for (int i = 0; i < H; i++)
+        {
+            for (int j = 0; j < W; j++)
+            {
+                distance[i, j] = (Math.Abs(P - i)) + (Math.Abs(Q - j));
+                if(box[i, j] == false)
+                {
+                    if(flg)
+                    {
+                        min = distance[i, j];
+                        flg = false;
+                    }
+                    if(min > distance[i, j])
+                    {
+                        min = distance[i, j];
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < H; i++)
+        {
+            for (int j = 0; j < W; j++)
+            {
+                if (distance[i, j] == min && box[i, j] == false)
+                {
+                    Console.WriteLine(i + " " + j);
+                }
+            }
+        }
+    }
+}
