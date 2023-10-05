@@ -1,0 +1,54 @@
+using System;
+class Program
+{
+    static void Main()
+    {
+        var line = Console.ReadLine();
+        string[] arr = line.Split(' ');
+        int humans = int.Parse(arr[0]);
+        int questions = int.Parse(arr[1]);
+        
+        string[,] answerBord = new string[humans, questions];
+        for (int i = 0; i < humans; i++)
+        {
+            line = Console.ReadLine();
+            arr = line.Split(' ');
+            for (int j = 0; j < questions; j++)
+            {
+                int num = 0;
+                if (int.TryParse(arr[j], out num))
+                {
+                    if (0 <= num && num <= 100)
+                    {
+                        answerBord[i, j] = arr[j];
+                    }
+                }
+            }
+        }
+        
+        int ans = 0;
+        int count = 0;
+        for (int i = 0; i < questions; i++)
+        {
+            ans = 0;
+            count = 0;
+            for (int j = 0; j < humans; j++)
+            {
+                if (answerBord[j, i] != null)
+                {
+                    ans += int.Parse(answerBord[j, i]);
+                    count++;
+                }
+            }
+            if (count == 0 && ans == 0)
+            {
+                Console.WriteLine(0);
+            }
+            else
+            {
+                ans = ans / count;
+                Console.WriteLine(ans);
+            }
+        }
+    }
+}
