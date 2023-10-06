@@ -1,0 +1,55 @@
+using System;
+class Program
+{
+    static void Main()
+    {
+        var line = Console.ReadLine();
+        string[] arr = line.Split(' ');
+        int x = int.Parse(arr[0]);
+        int y = int.Parse(arr[1]);
+        int checkTine = int.Parse(arr[2]);
+        int buss = int.Parse(arr[3]);
+        
+        int[,] board = new int[y, x];
+        for (int i = 0; i < y; i++)
+        {
+            line = Console.ReadLine();
+            arr = line.Split(' ');
+            for (int j = 0; j < x; j++)
+            {
+                board[i, j] = int.Parse(arr[j]);
+            }
+        }
+        
+        int goodCount = 0;
+        bool flg = false;
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                goodCount = 0;
+                for (int l = 0; l < checkTine; l++)
+                {
+                    if (j + l >= y)
+                    {
+                        Console.WriteLine("no" + " " + 0);
+                        flg = true;
+                        break;
+                    }
+                    goodCount += board[j + l, i];
+                    if (goodCount >= buss)
+                    {
+                        Console.WriteLine("yes" + " " + (j + l + 1));
+                        flg = true;
+                        break;
+                    }
+                }
+                if (flg)
+                {
+                    flg = false;
+                    break;
+                }
+            }
+        }
+    }
+}
