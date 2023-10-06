@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+class Program
+{
+    static void Main()
+    {
+        var line = Console.ReadLine();
+        string[] arr = line.Split(' ');
+        int fieldSize = int.Parse(arr[0]);
+        int precipitation = int.Parse(arr[1]);
+        
+        int[,] field = new int[fieldSize, fieldSize];
+        for (int i = 0; i < fieldSize; i++)
+        {
+            line = Console.ReadLine();
+            arr = line.Split(' ');
+            for (int j = 0; j < fieldSize; j++)
+            {
+                field[i, j] = int.Parse(arr[j]);
+            }
+        }
+        
+        List<int> Passable = new List<int>();
+        int count = 0;
+        for (int i = 0; i < fieldSize; i++)
+        {
+            count = 0;
+            for (int j = 0; j < fieldSize; j++)
+            {
+                if (field[j, i] >= precipitation)
+                {
+                    count = 0;
+                    break;
+                }
+                count++;
+            }
+            if (count == fieldSize)
+            {
+                Passable.Add(i + 1);
+            }
+        }
+        
+        for (int i = 0; i < Passable.Count; i++)
+        {
+            if (i == Passable.Count - 1)
+            {
+                Console.Write(Passable[i]);
+            }
+            else
+            {
+                Console.Write(Passable[i] + " ");
+            }
+        }
+        
+        if (Passable.Count == 0)
+        {
+            Console.Write("wait");
+        }
+    }
+}
