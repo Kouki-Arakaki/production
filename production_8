@@ -1,0 +1,69 @@
+using System;
+using System.Linq;
+class Program
+{
+    static void Main()
+    {
+        var line = Console.ReadLine();
+        string[] arr = line.Split(' ');
+        int humans = int.Parse(arr[0]);
+        int measure = int.Parse(arr[1]);
+        
+        int[] song = new int[measure];
+        for (int i = 0; i < measure; i++)
+        {
+            line = Console.ReadLine();
+            song[i] = int.Parse(line);
+        }
+        
+        int[,] humans_measure = new int[humans, measure];
+        for (int i = 0; i < humans; i++)
+        {
+            for (int j = 0; j < measure; j++)
+            {
+                line = Console.ReadLine();
+                humans_measure[i, j] = int.Parse(line);
+            }
+        }
+        
+        int[] score = new int[humans];
+        for (int i = 0; i < humans; i++)
+        {
+            score[i] = 100;
+            for (int j = 0; j < measure; j++)
+            {
+                if (Math.Abs(song[j] - humans_measure[i, j]) <= 5)
+                {
+                    continue;
+                }
+                else if (Math.Abs(song[j] - humans_measure[i, j]) <= 10)
+                {
+                   score[i]--; 
+                   continue;
+                }
+                else if (Math.Abs(song[j] - humans_measure[i, j]) <= 20)
+                {
+                    score[i] -= 2;
+                    continue;
+                }
+                else if (Math.Abs(song[j] - humans_measure[i, j]) <= 30)
+                {
+                    score[i] -= 3;
+                    continue;
+                }
+                else
+                {
+                    if (score[i] - 5 <= 0)
+                    {
+                        score[i] = 0;
+                    }
+                    else
+                    {
+                        score[i] -= 5;
+                    }
+                }
+            }
+        }
+        Console.WriteLine(score.Max());
+    }
+}
